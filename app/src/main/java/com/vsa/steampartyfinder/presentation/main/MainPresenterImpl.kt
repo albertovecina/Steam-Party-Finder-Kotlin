@@ -1,7 +1,5 @@
 package com.vsa.steampartyfinder.presentation.main
 
-import android.util.Log
-import com.vsa.steampartyfinder.base.extensions.toJson
 import com.vsa.steampartyfinder.data.model.domain.Player
 import com.vsa.steampartyfinder.data.source.usecase.GetFriendsUseCase
 import com.vsa.steampartyfinder.ui.main.MainView
@@ -27,7 +25,7 @@ class MainPresenterImpl(view: MainView) : MainPresenter {
         GetFriendsUseCase.observeSteamFriendsByNickName(mView.getNickName())
                 .subscribe(object : Observer<List<Player>> {
                     override fun onNext(t: List<Player>) {
-                        Log.d("test", t.toJson())
+                        mView.navigateToFriendsList(ArrayList(t))
                     }
 
                     override fun onSubscribe(d: Disposable) {

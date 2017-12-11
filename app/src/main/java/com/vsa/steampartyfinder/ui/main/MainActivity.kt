@@ -5,9 +5,12 @@ import com.vsa.steampartyfinder.R
 import com.vsa.steampartyfinder.presentation.main.MainPresenter
 import com.vsa.steampartyfinder.presentation.main.MainPresenterImpl
 import com.vsa.steampartyfinder.ui.base.BaseActivity
+import com.vsa.steampartyfinder.ui.friends.FriendsActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.Serializable
 
 class MainActivity : BaseActivity(), MainView {
+
 
     private val mPresenter: MainPresenter = MainPresenterImpl(this)
 
@@ -26,8 +29,8 @@ class MainActivity : BaseActivity(), MainView {
         return editTextNickName.text.toString()
     }
 
-    override fun navigateToFriendsList() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun navigateToFriendsList(friendsList: Serializable) {
+        FriendsActivity.open(this, friendsList)
     }
 
 }
