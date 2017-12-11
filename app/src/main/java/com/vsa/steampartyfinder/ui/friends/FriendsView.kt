@@ -9,4 +9,6 @@ interface FriendsView {
 
     fun setFriendsList(dataProvider: PlayersDataProvider)
 
+    fun refreshFriendsList()
+
 }

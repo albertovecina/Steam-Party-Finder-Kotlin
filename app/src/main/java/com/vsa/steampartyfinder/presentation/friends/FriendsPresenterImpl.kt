@@ -10,23 +10,38 @@ import java.io.Serializable
  */
 class FriendsPresenterImpl(view: FriendsView) : FriendsPresenter, PlayersDataProvider {
 
-    val mView: FriendsView = view
-    var mFriendsList: List<Player>? = null
+
+    private val mView: FriendsView = view
+    private var mFriendsList: List<Player>? = null
+    private val mSelectedFriendsList: MutableList<String> = ArrayList()
 
     override fun onCreate(friendsList: Serializable) {
         mFriendsList = friendsList as? ArrayList<Player>
         mView.setFriendsList(this)
     }
 
-    override fun size(): Int {
-        return mFriendsList?.size ?: 0
-    }
-
     override fun getFriendName(index: Int): String {
         return mFriendsList?.get(index)?.name ?: ""
     }
 
-    override fun getFriendPortrailrUrl(index: Int): String {
+    override fun getFriendPortraitUrl(index: Int): String {
         return mFriendsList?.get(index)?.portraitUrl ?: ""
     }
+
+    override fun friendsListSize(): Int {
+        return mFriendsList?.size ?: 0
+    }
+
+    override fun isFriendSelected(position: Int): Boolean {
+        return mSelectedFriendsList.contains(mFriendsList?.get(position)?.steamId)
+    }
+
+    override fun onFriendClick(position: Int) {
+        if (isFriendSelected(position))
+            mSelectedFriendsList.remove(mFriendsList?.get(position)?.steamId)
+        else
+            mSelectedFriendsList.add(mFriendsList?.get(position)?.steamId!!)
+        mView.refreshFriendsList()
+    }
+
 }

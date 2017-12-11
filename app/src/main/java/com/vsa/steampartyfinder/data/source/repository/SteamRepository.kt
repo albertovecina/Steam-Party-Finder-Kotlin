@@ -33,7 +33,7 @@ object SteamRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { response ->
                     response.response.players
-                            .map { Player(it.personaname, it.avatarmedium) }
+                            .map { Player(it.steamid, it.personaname, it.avatarmedium) }
                 }
     }
 

@@ -47,4 +47,8 @@ class FriendsActivity : BaseActivity(), FriendsView {
         recyclerViewFriends.adapter = FriendsAdapter(dataProvider)
     }
 
+    override fun refreshFriendsList() {
+        recyclerViewFriends.adapter?.notifyDataSetChanged()
+    }
+
 }

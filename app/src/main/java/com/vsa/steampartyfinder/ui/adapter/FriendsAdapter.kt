@@ -1,5 +1,6 @@
 package com.vsa.steampartyfinder.ui.adapter
 
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,7 @@ class FriendsAdapter(dataProvider: PlayersDataProvider) : RecyclerView.Adapter<F
     private val mDataProvider = dataProvider
 
     override fun getItemCount(): Int {
-        return mDataProvider.size()
+        return mDataProvider.friendsListSize()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FriendViewHolder {
@@ -33,9 +34,15 @@ class FriendsAdapter(dataProvider: PlayersDataProvider) : RecyclerView.Adapter<F
     class FriendViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(dataProvider: PlayersDataProvider, position: Int) {
+            wrapperRowFriend.setOnClickListener { dataProvider.onFriendClick(position) }
+            if (dataProvider.isFriendSelected(position))
+                wrapperRowFriend.setBackgroundColor(Color.BLACK)
+            else
+                wrapperRowFriend.setBackgroundColor(Color.WHITE)
+
             textViewPlayerName.text = dataProvider.getFriendName(position)
             Picasso.with(containerView.context).
-                    load(dataProvider.getFriendPortrailrUrl(position))
+                    load(dataProvider.getFriendPortraitUrl(position))
                     .into(imageViewPlayerPortrait)
         }
 
