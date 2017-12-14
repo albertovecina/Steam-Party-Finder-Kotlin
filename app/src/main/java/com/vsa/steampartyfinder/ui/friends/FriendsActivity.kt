@@ -40,6 +40,7 @@ class FriendsActivity : BaseActivity(), FriendsView {
     private fun initViews() {
         recyclerViewFriends.addItemDecoration(HorizontalDividerItemDecoration.Builder(this)
                 .build())
+        buttonFindGames.setOnClickListener { mPresenter.onFindButtonClick() }
     }
 
     override fun setFriendsList(dataProvider: PlayersDataProvider) {
