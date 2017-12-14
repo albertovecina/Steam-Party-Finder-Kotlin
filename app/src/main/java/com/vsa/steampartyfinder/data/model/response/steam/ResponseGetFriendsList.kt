@@ -1,4 +1,4 @@
-package com.vsa.steampartyfinder.data.model.response
+package com.vsa.steampartyfinder.data.model.response.steam
 
 import com.google.gson.annotations.SerializedName
 

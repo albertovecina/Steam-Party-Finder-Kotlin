@@ -1,4 +1,4 @@
-package com.vsa.steampartyfinder.data.model.response
+package com.vsa.steampartyfinder.data.model.response.steam
 
 /**
  * Created by Alberto Vecina Sánchez on 4/12/17.

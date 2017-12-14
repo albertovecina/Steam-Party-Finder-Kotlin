@@ -1,9 +1,9 @@
 package com.vsa.steampartyfinder.data.source.ws
 
-import com.vsa.steampartyfinder.data.model.response.ResponseGetFriendsList
-import com.vsa.steampartyfinder.data.model.response.ResponseGetOwnedGames
-import com.vsa.steampartyfinder.data.model.response.ResponseGetPlayerSummaries
-import com.vsa.steampartyfinder.data.model.response.ResponseResolveVanityURL
+import com.vsa.steampartyfinder.data.model.response.steam.ResponseGetFriendsList
+import com.vsa.steampartyfinder.data.model.response.steam.ResponseGetOwnedGames
+import com.vsa.steampartyfinder.data.model.response.steam.ResponseGetPlayerSummaries
+import com.vsa.steampartyfinder.data.model.response.steam.ResponseResolveVanityURL
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
