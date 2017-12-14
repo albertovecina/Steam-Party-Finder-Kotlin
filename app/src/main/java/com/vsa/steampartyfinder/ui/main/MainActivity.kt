@@ -11,7 +11,6 @@ import java.io.Serializable
 
 class MainActivity : BaseActivity(), MainView {
 
-
     private val mPresenter: MainPresenter = MainPresenterImpl(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {

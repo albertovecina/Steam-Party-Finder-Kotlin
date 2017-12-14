@@ -7,9 +7,10 @@ import android.support.v7.widget.LinearLayoutManager
 import com.vsa.steampartyfinder.R
 import com.vsa.steampartyfinder.presentation.friends.FriendsPresenter
 import com.vsa.steampartyfinder.presentation.friends.FriendsPresenterImpl
-import com.vsa.steampartyfinder.ui.adapter.FriendsAdapter
-import com.vsa.steampartyfinder.ui.adapter.PlayersDataProvider
+import com.vsa.steampartyfinder.ui.adapter.players.PlayersAdapter
+import com.vsa.steampartyfinder.ui.adapter.players.PlayersDataProvider
 import com.vsa.steampartyfinder.ui.base.BaseActivity
+import com.vsa.steampartyfinder.ui.games.GamesActivity
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import kotlinx.android.synthetic.main.activity_friends.*
 import java.io.Serializable
@@ -38,18 +39,22 @@ class FriendsActivity : BaseActivity(), FriendsView {
     }
 
     private fun initViews() {
+        recyclerViewFriends.layoutManager = LinearLayoutManager(this)
         recyclerViewFriends.addItemDecoration(HorizontalDividerItemDecoration.Builder(this)
                 .build())
         buttonFindGames.setOnClickListener { mPresenter.onFindButtonClick() }
     }
 
     override fun setFriendsList(dataProvider: PlayersDataProvider) {
-        recyclerViewFriends.layoutManager = LinearLayoutManager(this)
-        recyclerViewFriends.adapter = FriendsAdapter(dataProvider)
+        recyclerViewFriends.adapter = PlayersAdapter(dataProvider)
     }
 
     override fun refreshFriendsList() {
         recyclerViewFriends.adapter?.notifyDataSetChanged()
+    }
+
+    override fun navigateToGames(gamesList: Serializable) {
+        GamesActivity.open(this, gamesList)
     }
 
 }
