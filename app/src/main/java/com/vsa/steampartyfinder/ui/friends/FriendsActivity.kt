@@ -18,11 +18,12 @@ import java.io.Serializable
 class FriendsActivity : BaseActivity(), FriendsView {
 
     companion object {
-
+        private val EXTRA_STEAM_ID = "extra_steam_id"
         private val EXTRA_FRIENDS_LIST = "extra_friends_list"
 
-        fun open(context: Context, friendsList: Serializable) {
+        fun open(context: Context, steamId: String, friendsList: Serializable) {
             val intent = Intent(context, FriendsActivity::class.java)
+            intent.putExtra(EXTRA_STEAM_ID, steamId)
             intent.putExtra(EXTRA_FRIENDS_LIST, friendsList)
             context.startActivity(intent)
         }
@@ -35,7 +36,9 @@ class FriendsActivity : BaseActivity(), FriendsView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friends)
         initViews()
-        mPresenter.onCreate(intent.extras.getSerializable(EXTRA_FRIENDS_LIST))
+        mPresenter.onCreate(
+                intent.extras.getString(EXTRA_STEAM_ID),
+                intent.extras.getSerializable(EXTRA_FRIENDS_LIST))
     }
 
     private fun initViews() {

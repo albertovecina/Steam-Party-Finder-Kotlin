@@ -12,7 +12,12 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
  */
 object SteamSpyClient {
 
+    private var clientInterface: SteamSpyInterface? = null
+
     fun create(): SteamSpyInterface {
+
+        if (clientInterface != null)
+            return clientInterface!!
 
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
@@ -28,8 +33,8 @@ object SteamSpyClient {
                 .baseUrl(Environment.ENDPOINT_STEAM_SPY)
                 .client(httpClient.build())
                 .build()
-        return retrofit.create(SteamSpyInterface::
-        class.java)
+        clientInterface = retrofit.create(SteamSpyInterface::class.java)
+        return clientInterface!!
     }
 
 }

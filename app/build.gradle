@@ -36,6 +36,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$project.supportVersionName"
+    implementation "com.android.support:design:$project.supportVersionName"
     implementation "com.android.support:recyclerview-v7:$project.supportVersionName"
     implementation "com.android.support.constraint:constraint-layout:1.0.2"
     testImplementation "junit:junit:4.12"
@@ -50,6 +51,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 
     implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     // Because RxAndroid releases are few and far between, it is recommended you also

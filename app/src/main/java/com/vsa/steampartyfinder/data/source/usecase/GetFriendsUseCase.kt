@@ -9,7 +9,7 @@ import io.reactivex.Observable
  */
 object GetFriendsUseCase {
 
-    private fun observeSteamId(nickName: String): Observable<String> {
+    fun observeSteamId(nickName: String): Observable<String> {
         return SteamRepository.getSteamId(nickName)
     }
 
@@ -20,6 +20,11 @@ object GetFriendsUseCase {
     private fun observePlayerSummaries(playerIds: List<String>): Observable<List<Player>> {
         val steamIds = playerIds.toString().replace("]", "")
         return SteamRepository.getPlayers(steamIds)
+    }
+
+    fun observeSteamFriendsBySteamId(steamId: String): Observable<List<Player>> {
+        return observeFriendsSteamIds(steamId)
+                .flatMap { friendIds -> observePlayerSummaries(friendIds) }
     }
 
     fun observeSteamFriendsByNickName(nickName: String): Observable<List<Player>> {

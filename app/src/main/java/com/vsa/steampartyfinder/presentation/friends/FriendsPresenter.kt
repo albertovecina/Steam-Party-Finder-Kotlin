@@ -7,7 +7,7 @@ import java.io.Serializable
  */
 interface FriendsPresenter {
 
-    fun onCreate(friendsList: Serializable)
+    fun onCreate(steamId: String, friendsList: Serializable)
 
     fun onFindButtonClick()
 

@@ -9,15 +9,15 @@ import com.vsa.steampartyfinder.data.model.response.steamspy.ResponseAppDetails
 object GameDetailsDataMapper {
 
     fun transform(responseAppDetails: ResponseAppDetails): GameDetails {
-        val gameDetails: GameDetails = GameDetails()
+        val gameDetails = GameDetails()
         gameDetails.appId = responseAppDetails.appid
 
         with(responseAppDetails.tags) {
             if (containsKey(ResponseAppDetails.TAG_SINGLE_PLAYER))
                 gameDetails.gameModes.add(GameDetails.GameMode.SINGLE)
-            if (containsKey(ResponseAppDetails.TAG_SINGLE_PLAYER))
+            if (containsKey(ResponseAppDetails.TAG_MULTIPLAYER))
                 gameDetails.gameModes.add(GameDetails.GameMode.MULTIPLAYER)
-            if (containsKey(ResponseAppDetails.TAG_SINGLE_PLAYER))
+            if (containsKey(ResponseAppDetails.TAG_CO_OP))
                 gameDetails.gameModes.add(GameDetails.GameMode.COOP)
         }
         return gameDetails
