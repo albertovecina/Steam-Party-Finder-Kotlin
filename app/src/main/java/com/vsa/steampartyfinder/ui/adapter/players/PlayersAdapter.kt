@@ -1,4 +1,4 @@
-package com.vsa.steampartyfinder.ui.adapter
+package com.vsa.steampartyfinder.ui.adapter.players
 
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import com.squareup.picasso.Picasso
 import com.vsa.steampartyfinder.R
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_friend.*
+import kotlinx.android.synthetic.main.row_player.*
 
 /**
  * Created by Alberto Vecina Sánchez on 6/12/17.
  */
-class FriendsAdapter(dataProvider: PlayersDataProvider) : RecyclerView.Adapter<FriendsAdapter.FriendViewHolder>() {
+class PlayersAdapter(dataProvider: PlayersDataProvider) : RecyclerView.Adapter<PlayersAdapter.PlayerViewHolder>() {
 
     private val mDataProvider = dataProvider
 
@@ -21,17 +21,17 @@ class FriendsAdapter(dataProvider: PlayersDataProvider) : RecyclerView.Adapter<F
         return mDataProvider.friendsListSize()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FriendViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PlayerViewHolder {
         val view = LayoutInflater.from(parent?.context)
-                .inflate(R.layout.row_friend, parent, false)
-        return FriendViewHolder(view)
+                .inflate(R.layout.row_player, parent, false)
+        return PlayerViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: FriendViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: PlayerViewHolder?, position: Int) {
         holder?.bind(mDataProvider, position)
     }
 
-    class FriendViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    class PlayerViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(dataProvider: PlayersDataProvider, position: Int) {
             wrapperRowFriend.setOnClickListener { dataProvider.onFriendClick(position) }

@@ -1,4 +1,4 @@
-package com.vsa.steampartyfinder.ui.adapter
+package com.vsa.steampartyfinder.ui.adapter.players
 
 /**
  * Created by Alberto Vecina Sánchez on 6/12/17.
