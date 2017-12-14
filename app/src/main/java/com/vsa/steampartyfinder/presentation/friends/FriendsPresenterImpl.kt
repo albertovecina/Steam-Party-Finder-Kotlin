@@ -1,15 +1,20 @@
 package com.vsa.steampartyfinder.presentation.friends
 
+import android.util.Log
+import com.vsa.steampartyfinder.base.extensions.toJson
+import com.vsa.steampartyfinder.data.model.domain.Game
 import com.vsa.steampartyfinder.data.model.domain.Player
+import com.vsa.steampartyfinder.data.source.usecase.GetGamesUseCase
 import com.vsa.steampartyfinder.ui.adapter.PlayersDataProvider
 import com.vsa.steampartyfinder.ui.friends.FriendsView
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import java.io.Serializable
 
 /**
  * Created by Alberto Vecina Sánchez on 6/12/17.
  */
 class FriendsPresenterImpl(view: FriendsView) : FriendsPresenter, PlayersDataProvider {
-
 
     private val mView: FriendsView = view
     private var mFriendsList: List<Player>? = null
@@ -18,6 +23,27 @@ class FriendsPresenterImpl(view: FriendsView) : FriendsPresenter, PlayersDataPro
     override fun onCreate(friendsList: Serializable) {
         mFriendsList = friendsList as? ArrayList<Player>
         mView.setFriendsList(this)
+    }
+
+    override fun onFindButtonClick() {
+        GetGamesUseCase().observeOwnedGames(mSelectedFriendsList)
+                .subscribe(object : Observer<List<Game>> {
+                    override fun onComplete() {
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onNext(t: List<Game>) {
+                        Log.d("prueba", t.toJson())
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.d("prueba", e.message)
+                    }
+
+                })
+
     }
 
     override fun getFriendName(index: Int): String {

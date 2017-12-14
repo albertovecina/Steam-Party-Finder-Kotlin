@@ -1,6 +1,7 @@
 package com.vsa.steampartyfinder.data.source.ws
 
 import com.vsa.steampartyfinder.data.model.response.ResponseGetFriendsList
+import com.vsa.steampartyfinder.data.model.response.ResponseGetOwnedGames
 import com.vsa.steampartyfinder.data.model.response.ResponseGetPlayerSummaries
 import com.vsa.steampartyfinder.data.model.response.ResponseResolveVanityURL
 import io.reactivex.Observable
@@ -20,5 +21,8 @@ interface SteamInterface {
 
     @GET("/ISteamUser/GetPlayerSummaries/v0002/")
     fun observePlayerSummaries(@Query("key") apiKey: String, @Query("steamids") steamIds: String): Observable<ResponseGetPlayerSummaries>
+
+    @GET("/IPlayerService/GetOwnedGames/v0001/?include_appinfo=1")
+    fun observeOwnedGames(@Query("key") apiKey: String, @Query("steamid") steamId: String): Observable<ResponseGetOwnedGames>
 
 }

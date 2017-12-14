@@ -2,6 +2,7 @@ package com.vsa.steampartyfinder.data.source.repository
 
 import com.vsa.steampartyfinder.R
 import com.vsa.steampartyfinder.SpfApplication
+import com.vsa.steampartyfinder.data.model.domain.Game
 import com.vsa.steampartyfinder.data.model.domain.Player
 import com.vsa.steampartyfinder.data.source.ws.SteamClient
 import io.reactivex.Observable
@@ -36,5 +37,14 @@ object SteamRepository {
                             .map { Player(it.steamid, it.personaname, it.avatarmedium) }
                 }
     }
+
+    fun getOwnedGames(steamId: String): Observable<List<Game>> {
+        return SteamClient.create().observeOwnedGames(SpfApplication.context.resources.getString(R.string.steam_api_key),
+                steamId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map { response -> response.response.games.map { Game(it.appid, it.name, it.img_logo_url) } }
+    }
+
 
 }

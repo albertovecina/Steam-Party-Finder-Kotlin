@@ -9,4 +9,6 @@ interface FriendsPresenter {
 
     fun onCreate(friendsList: Serializable)
 
+    fun onFindButtonClick()
+
 }
