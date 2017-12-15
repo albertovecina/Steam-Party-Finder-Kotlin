@@ -14,6 +14,8 @@ class MainPresenterImpl(view: MainView) : MainPresenter {
 
     val mView: MainView = view
 
+    lateinit var mSteamId: String
+
     override fun onCreate() {
     }
 
@@ -22,23 +24,26 @@ class MainPresenterImpl(view: MainView) : MainPresenter {
     }
 
     private fun requestFriends() {
-        GetFriendsUseCase.observeSteamFriendsByNickName(mView.getNickName())
-                .subscribe(object : Observer<List<Player>> {
-                    override fun onNext(t: List<Player>) {
-                        mView.navigateToFriendsList(ArrayList(t))
-                    }
+        GetFriendsUseCase.observeSteamId(mView.getNickName())
+                .flatMap { t ->
+                    mSteamId = t
+                    GetFriendsUseCase.observeSteamFriendsBySteamId(mSteamId)
+                }.subscribe(object : Observer<List<Player>> {
+            override fun onNext(t: List<Player>) {
+                mView.navigateToFriendsList(mSteamId, ArrayList(t))
+            }
 
-                    override fun onSubscribe(d: Disposable) {
-                        mView.showProgress()
-                    }
+            override fun onSubscribe(d: Disposable) {
+                mView.showProgress()
+            }
 
-                    override fun onError(e: Throwable) {
-                    }
+            override fun onError(e: Throwable) {
+            }
 
-                    override fun onComplete() {
-                        mView.hideProgress()
-                    }
-                })
+            override fun onComplete() {
+                mView.hideProgress()
+            }
+        })
     }
 
 }

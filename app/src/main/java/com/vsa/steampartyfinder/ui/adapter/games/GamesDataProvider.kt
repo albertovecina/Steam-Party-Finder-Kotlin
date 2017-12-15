@@ -9,6 +9,8 @@ interface GamesDataProvider {
 
     fun getImageUrl(position: Int): String
 
+    fun getGameModes(position: Int): List<Int>?
+
     fun getGamesListSize(): Int
 
 }

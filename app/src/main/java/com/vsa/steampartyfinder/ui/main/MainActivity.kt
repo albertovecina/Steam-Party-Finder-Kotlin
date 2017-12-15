@@ -28,8 +28,8 @@ class MainActivity : BaseActivity(), MainView {
         return editTextNickName.text.toString()
     }
 
-    override fun navigateToFriendsList(friendsList: Serializable) {
-        FriendsActivity.open(this, friendsList)
+    override fun navigateToFriendsList(steamId: String, friendsList: Serializable) {
+        FriendsActivity.open(this, steamId, friendsList)
     }
 
 }

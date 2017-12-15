@@ -5,6 +5,7 @@ package com.vsa.steampartyfinder.data.source.ws
  */
 object Environment {
 
-    val ENDPOINT_STEAM = "http://api.steampowered.com"
+    val ENDPOINT_STEAM = "http://api.steampowered.com/"
+    val ENDPOINT_STEAM_SPY = "https://steamspy.com"
 
 }

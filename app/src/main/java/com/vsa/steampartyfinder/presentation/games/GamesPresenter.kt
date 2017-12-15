@@ -9,4 +9,6 @@ interface GamesPresenter {
 
     fun onCreate(gamesList: Serializable)
 
+    fun onFilterButtonClick()
+
 }

@@ -9,4 +9,14 @@ interface GamesView {
 
     fun setGamesList(dataProvider: GamesDataProvider)
 
+    fun getSinglePlayerIcon(): Int
+
+    fun getMultiPlayerIcon(): Int
+
+    fun getCoopIcon(): Int
+
+    fun refreshList()
+
+    fun refreshList(position:Int)
+
 }

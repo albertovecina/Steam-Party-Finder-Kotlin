@@ -28,23 +28,44 @@ class GamesActivity : BaseActivity(), GamesView {
     }
 
 
-    private val mGamesPresenter: GamesPresenter = GamesPresenterImpl(this)
+    private val mPresenter: GamesPresenter = GamesPresenterImpl(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_games)
         initViews()
-        mGamesPresenter.onCreate(intent.getSerializableExtra(EXTRA_GAMES_LIST))
+        mPresenter.onCreate(intent.getSerializableExtra(EXTRA_GAMES_LIST))
     }
 
     private fun initViews() {
         recyclerViewGames.layoutManager = LinearLayoutManager(this)
         recyclerViewGames.addItemDecoration(HorizontalDividerItemDecoration.Builder(this).build())
+        fabFilterGames.setOnClickListener { mPresenter.onFilterButtonClick() }
     }
 
     override fun setGamesList(dataProvider: GamesDataProvider) {
         recyclerViewGames.adapter = GamesAdapter(dataProvider)
+    }
+
+    override fun getSinglePlayerIcon(): Int {
+        return R.drawable.ic_single_player
+    }
+
+    override fun getMultiPlayerIcon(): Int {
+        return R.drawable.ic_multiplayer
+    }
+
+    override fun getCoopIcon(): Int {
+        return R.drawable.ic_coop
+    }
+
+    override fun refreshList() {
+        recyclerViewGames.adapter.notifyDataSetChanged()
+    }
+
+    override fun refreshList(position: Int) {
+        recyclerViewGames.adapter.notifyItemChanged(position)
     }
 
 }

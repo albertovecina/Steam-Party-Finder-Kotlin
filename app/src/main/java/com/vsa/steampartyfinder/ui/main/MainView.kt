@@ -13,6 +13,6 @@ interface MainView {
 
     fun getNickName(): String
 
-    fun navigateToFriendsList(friendsList: Serializable)
+    fun navigateToFriendsList(steamId: String, friendsList: Serializable)
 
 }
