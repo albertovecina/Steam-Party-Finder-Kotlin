@@ -36,9 +36,9 @@ class PlayersAdapter(dataProvider: PlayersDataProvider) : RecyclerView.Adapter<P
         fun bind(dataProvider: PlayersDataProvider, position: Int) {
             wrapperRowFriend.setOnClickListener { dataProvider.onFriendClick(position) }
             if (dataProvider.isFriendSelected(position))
-                wrapperRowFriend.setBackgroundColor(Color.BLACK)
+                wrapperRowFriend.setBackgroundResource(R.color.colorAccent)
             else
-                wrapperRowFriend.setBackgroundColor(Color.WHITE)
+                wrapperRowFriend.setBackgroundColor(Color.TRANSPARENT)
 
             textViewPlayerName.text = dataProvider.getFriendName(position)
             Picasso.with(containerView.context).

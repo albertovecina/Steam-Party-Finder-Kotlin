@@ -9,6 +9,6 @@ interface GamesPresenter {
 
     fun onCreate(gamesList: Serializable)
 
-    fun onFilterButtonClick()
+    fun onFiltersChange(status:Array<Boolean>)
 
 }

@@ -6,6 +6,6 @@ package com.vsa.steampartyfinder.data.model.domain
 
 data class GameDetails(var appId: String = "", var gameModes: MutableList<GameMode> = ArrayList()) {
 
-    enum class GameMode { SINGLE, MULTIPLAYER, COOP }
+    enum class GameMode { SINGLE, COOP, MULTIPLAYER }
 
 }

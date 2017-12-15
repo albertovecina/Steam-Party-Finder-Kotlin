@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.vsa.steampartyfinder.ui.custom.FabCheckBox
+        android:id="@+id/fab3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/fab_button_margin"
+        android:src="@drawable/ic_single_player"
+        app:fabSize="mini" />
+
+    <com.vsa.steampartyfinder.ui.custom.FabCheckBox
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/fab_button_margin"
+        android:src="@drawable/ic_coop"
+        app:fabSize="mini" />
+
+    <com.vsa.steampartyfinder.ui.custom.FabCheckBox
+        android:id="@+id/fab1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/fab_button_margin"
+        android:src="@drawable/ic_multiplayer"
+        app:fabSize="mini" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabMain"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/fab_button_size_normal"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/fab_button_margin"
+        android:src="@drawable/ic_filter"
+        app:fabSize="normal" />
+
+</merge>
