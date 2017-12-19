@@ -10,6 +10,8 @@ import com.vsa.steampartyfinder.presentation.games.GamesPresenterImpl
 import com.vsa.steampartyfinder.ui.adapter.games.GamesAdapter
 import com.vsa.steampartyfinder.ui.adapter.games.GamesDataProvider
 import com.vsa.steampartyfinder.ui.base.BaseActivity
+import com.vsa.steampartyfinder.ui.custom.FabActionMenu
+import com.vsa.steampartyfinder.ui.games.filter.GamesFilterDialogFragment
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import kotlinx.android.synthetic.main.activity_games.*
 import java.io.Serializable
@@ -41,11 +43,20 @@ class GamesActivity : BaseActivity(), GamesView {
     private fun initViews() {
         recyclerViewGames.layoutManager = LinearLayoutManager(this)
         recyclerViewGames.addItemDecoration(HorizontalDividerItemDecoration.Builder(this).build())
-        fabFilterGames.setOnClickListener { mPresenter.onFilterButtonClick() }
+        fabActionMenuFilters.setOnAcceptButtonClickListener(object : FabActionMenu.OnAcceptButtonClickListener {
+            override fun onAcceptButtonClick(status: Array<Boolean>) {
+                mPresenter.onFiltersChange(status)
+            }
+
+        })
     }
 
     override fun setGamesList(dataProvider: GamesDataProvider) {
         recyclerViewGames.adapter = GamesAdapter(dataProvider)
+    }
+
+    override fun showFiltersDialog(gameModes: Serializable) {
+        GamesFilterDialogFragment.show(supportFragmentManager, gameModes)
     }
 
     override fun getSinglePlayerIcon(): Int {
@@ -66,6 +77,10 @@ class GamesActivity : BaseActivity(), GamesView {
 
     override fun refreshList(position: Int) {
         recyclerViewGames.adapter.notifyItemChanged(position)
+    }
+
+    override fun removeItemAt(position: Int) {
+        recyclerViewGames.adapter.notifyItemRemoved(position)
     }
 
 }

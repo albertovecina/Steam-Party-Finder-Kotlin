@@ -1,5 +1,6 @@
 package com.vsa.steampartyfinder.presentation.games
 
+import android.util.Log
 import com.vsa.steampartyfinder.data.model.domain.Game
 import com.vsa.steampartyfinder.data.model.domain.GameDetails
 import com.vsa.steampartyfinder.data.source.usecase.GetGamesDetailsUseCase
@@ -15,12 +16,14 @@ import java.io.Serializable
 class GamesPresenterImpl(view: GamesView) : GamesPresenter, GamesDataProvider {
 
     private lateinit var mGamesList: List<Game>
-    private var mGamesDetailsList: MutableMap<String, List<GameDetails.GameMode>> = HashMap()
+    private lateinit var mFilteredGamesList: MutableList<Game>
+    private var mFilteredGameModes: ArrayList<GameDetails.GameMode> = ArrayList()
 
     private val mView: GamesView = view
 
     override fun onCreate(gamesList: Serializable) {
         mGamesList = gamesList as List<Game>
+        mFilteredGamesList = ArrayList(mGamesList)
         mView.setGamesList(this)
         requestGameModes(mGamesList)
     }
@@ -29,6 +32,7 @@ class GamesPresenterImpl(view: GamesView) : GamesPresenter, GamesDataProvider {
         GetGamesDetailsUseCase.observeGameModes(games)
                 .subscribe(object : Observer<GameDetails> {
                     override fun onComplete() {
+                        Log.d("prueba", "asd")
                     }
 
                     override fun onError(e: Throwable) {
@@ -37,11 +41,30 @@ class GamesPresenterImpl(view: GamesView) : GamesPresenter, GamesDataProvider {
                     override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onNext(t: GameDetails) {
-                        mGamesDetailsList.put(t.appId, t.gameModes)
-                        mView.refreshList(mGamesList.indexOfFirst { it.appId == t.appId })
+                    override fun onNext(gameDetails: GameDetails) {
+                        val game: Game? = mGamesList.find { it.appId == gameDetails.appId }
+                        game?.gameModes = ArrayList(gameDetails.gameModes)
+
+                        val gameIndex: Int = mFilteredGamesList.indexOf(game)
+                        mView.refreshList(gameIndex)
+
+                        if (mFilteredGameModes.isNotEmpty()) {
+                            if (game?.gameModes?.containsAll(mFilteredGameModes) == false) {
+                                mFilteredGamesList.remove(game)
+                                mView.removeItemAt(gameIndex)
+                            }
+
+                        }
+
                     }
                 })
+    }
+
+    override fun onFiltersChange(status: Array<Boolean>) {
+        mFilteredGameModes = ArrayList(GameDetails.GameMode.values().filterIndexed { index, _ -> status[index] })
+        mFilteredGamesList = ArrayList(mGamesList)
+        mFilteredGamesList.removeAll { game -> game.gameModes.isNotEmpty() && !game.gameModes.containsAll(mFilteredGameModes) }
+        mView.refreshList()
     }
 
     private fun getIconByGameMode(gameMode: GameDetails.GameMode): Int {
@@ -53,19 +76,19 @@ class GamesPresenterImpl(view: GamesView) : GamesPresenter, GamesDataProvider {
     }
 
     override fun getName(position: Int): String {
-        return mGamesList[position].name
+        return mFilteredGamesList[position].name
     }
 
     override fun getImageUrl(position: Int): String {
-        return mGamesList[position].imageUrl
+        return mFilteredGamesList[position].imageUrl
     }
 
     override fun getGameModes(position: Int): List<Int>? {
-        return mGamesDetailsList?.get(mGamesList[position].appId)?.map { getIconByGameMode(it) }
+        return mFilteredGamesList[position].gameModes.map { getIconByGameMode(it) }
     }
 
     override fun getGamesListSize(): Int {
-        return mGamesList.size
+        return mFilteredGamesList.size
     }
 
 
