@@ -18,7 +18,12 @@ object SteamRepository {
         return SteamClient.create().observeSteamId(SpfApplication.context.resources.getString(R.string.steam_api_key), nickName)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map { response -> response.response.steamid }
+                .map { response ->
+                    if (response.response.success == "42")
+                        throw Throwable("Cannot find user id")
+                    else
+                        response.response.steamid
+                }
     }
 
     fun getFriendsSteamIds(steamId: String): Observable<List<String>> {

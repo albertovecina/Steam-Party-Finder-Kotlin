@@ -1,5 +1,6 @@
 package com.vsa.steampartyfinder.presentation.main
 
+import android.util.Log
 import com.vsa.steampartyfinder.data.model.domain.Player
 import com.vsa.steampartyfinder.data.source.usecase.GetFriendsUseCase
 import com.vsa.steampartyfinder.ui.main.MainView
@@ -38,6 +39,8 @@ class MainPresenterImpl(view: MainView) : MainPresenter {
             }
 
             override fun onError(e: Throwable) {
+                mView.hideProgress()
+                mView.showErrorMessage(e.message.toString())
             }
 
             override fun onComplete() {

@@ -1,9 +1,13 @@
 package com.vsa.steampartyfinder.ui.friends
 
+import android.animation.Animator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewAnimationUtils
 import com.vsa.steampartyfinder.R
 import com.vsa.steampartyfinder.presentation.friends.FriendsPresenter
 import com.vsa.steampartyfinder.presentation.friends.FriendsPresenterImpl
@@ -36,16 +40,57 @@ class FriendsActivity : BaseActivity(), FriendsView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friends)
         initViews()
-        mPresenter.onCreate(
-                intent.extras.getString(EXTRA_STEAM_ID),
-                intent.extras.getSerializable(EXTRA_FRIENDS_LIST))
+        if (intent.extras != null)
+            mPresenter.onCreate(
+                    intent.extras.getString(EXTRA_STEAM_ID),
+                    intent.extras.getSerializable(EXTRA_FRIENDS_LIST))
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initViews() {
         recyclerViewFriends.layoutManager = LinearLayoutManager(this)
         recyclerViewFriends.addItemDecoration(HorizontalDividerItemDecoration.Builder(this)
                 .build())
-        buttonFindGames.setOnClickListener { mPresenter.onFindButtonClick() }
+        fabFindGames.setOnClickListener { mPresenter.onFindButtonClick() }
+    }
+
+    override fun showFindButton() {
+        if (fabFindGames.visibility != View.VISIBLE) {
+            val radius = fabFindGames.width / 2
+            val anim = ViewAnimationUtils.createCircularReveal(fabFindGames, radius, radius, 0f, radius.toFloat())
+            fabFindGames.visibility = View.VISIBLE
+            anim.start()
+        }
+    }
+
+    override fun hideFindButton() {
+        if (fabFindGames.visibility != View.INVISIBLE) {
+            val radius = fabFindGames.width / 2
+            val anim = ViewAnimationUtils.createCircularReveal(fabFindGames, radius, radius, radius.toFloat(), 0f)
+            anim.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(p0: Animator?) {
+                }
+
+                override fun onAnimationEnd(p0: Animator?) {
+                    fabFindGames.visibility = View.INVISIBLE
+                }
+
+                override fun onAnimationCancel(p0: Animator?) {
+                }
+
+                override fun onAnimationStart(p0: Animator?) {
+                }
+
+            })
+            anim.start()
+        }
     }
 
     override fun setFriendsList(dataProvider: PlayersDataProvider) {
@@ -60,4 +105,7 @@ class FriendsActivity : BaseActivity(), FriendsView {
         GamesActivity.open(this, gamesList)
     }
 
+    override fun showErrorMessage(message: String) {
+        super.showErrorMessage(wrapperFriendsContent, message)
+    }
 }

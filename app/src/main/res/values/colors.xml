@@ -3,6 +3,9 @@
     <color name="colorPrimary">#263144</color>
     <color name="colorPrimaryDark">#192025</color>
     <color name="colorAccent">#142e45</color>
+    <color name="colorButton">#475e0d</color>
     <color name="windowBackground">#1C628B</color>
     <color name="colorSelected">#a3d4f2</color>
+    <color name="colorSelectedRow">#132F47</color>
+    <color name="errorBackground">#550000</color>
 </resources>

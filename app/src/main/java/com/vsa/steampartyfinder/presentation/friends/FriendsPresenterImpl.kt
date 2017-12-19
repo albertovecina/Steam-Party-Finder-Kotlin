@@ -32,7 +32,6 @@ class FriendsPresenterImpl(view: FriendsView) : FriendsPresenter, PlayersDataPro
         GetGamesUseCase().observeOwnedGames(friendsList)
                 .subscribe(object : Observer<List<Game>> {
                     override fun onComplete() {
-                        mView.hideProgress()
                     }
 
                     override fun onSubscribe(d: Disposable) {
@@ -40,7 +39,11 @@ class FriendsPresenterImpl(view: FriendsView) : FriendsPresenter, PlayersDataPro
                     }
 
                     override fun onNext(t: List<Game>) {
-                        mView.navigateToGames(ArrayList(t))
+                        mView.hideProgress()
+                        if (t.isEmpty())
+                            mView.showInfoMessage("No common games found")
+                        else
+                            mView.navigateToGames(ArrayList(t))
                     }
 
                     override fun onError(e: Throwable) {
@@ -72,6 +75,10 @@ class FriendsPresenterImpl(view: FriendsView) : FriendsPresenter, PlayersDataPro
         else
             mSelectedFriendsList.add(mFriendsList?.get(position)?.steamId!!)
         mView.refreshFriendsList()
+        if (mSelectedFriendsList.size < 2)
+            mView.hideFindButton()
+        else
+            mView.showFindButton()
     }
 
 }
