@@ -25,7 +25,7 @@ class GamesPresenterImpl(view: GamesView) : GamesPresenter, GamesDataProvider {
         mGamesList = gamesList as List<Game>
         mFilteredGamesList = ArrayList(mGamesList)
         mView.setGamesList(this)
-        requestGameModes(mGamesList)
+        requestGameModes(mGamesList.filter { it.gameModes.isEmpty() })
     }
 
     private fun requestGameModes(games: List<Game>) {

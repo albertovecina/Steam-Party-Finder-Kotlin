@@ -25,7 +25,7 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun getNickName(): String {
-        return editTextNickName.text.toString()
+        return editTextNickName.text.toString().trim()
     }
 
     override fun navigateToFriendsList(steamId: String, friendsList: Serializable) {

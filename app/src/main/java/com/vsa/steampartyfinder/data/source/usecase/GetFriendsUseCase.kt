@@ -20,6 +20,7 @@ object GetFriendsUseCase {
     private fun observePlayerSummaries(playerIds: List<String>): Observable<List<Player>> {
         val steamIds = playerIds.toString().replace("]", "")
         return SteamRepository.getPlayers(steamIds)
+                .map { players -> players.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it.name })) }
     }
 
     fun observeSteamFriendsBySteamId(steamId: String): Observable<List<Player>> {
@@ -31,5 +32,6 @@ object GetFriendsUseCase {
         return observeSteamId(nickName)
                 .flatMap { steamId -> observeFriendsSteamIds(steamId) }
                 .flatMap { friendIds -> observePlayerSummaries(friendIds) }
+                .map { it -> it.sortedBy { it.name } }
     }
 }

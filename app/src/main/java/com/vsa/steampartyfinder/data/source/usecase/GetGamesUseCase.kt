@@ -15,16 +15,19 @@ class GetGamesUseCase {
 
     fun observeOwnedGames(steamIds: List<String>): Observable<List<Game>> {
         val observables: List<Observable<List<Game>>> = steamIds.map { steamId -> observeOwnedGames(steamId) }
-        return Observable.zip(observables, { res -> intersect(res) })
-
+        return Observable.zip(observables, { res -> intersect(res).sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it.name })) })
     }
 
     private fun intersect(response: Array<Any>): List<Game> {
         if (response.isNotEmpty()) {
-            var res: Set<Game> = (response[0] as List<Game>).toSet()
-            for (item in response)
-                res = res.intersect(item as Iterable<Game>)
-            return ArrayList(res)
+            with(response.filterIsInstance(List::class.java)) {
+                with(map { it -> it.filterIsInstance(Game::class.java) }) {
+                    var res: Set<Game> = get(0).toSet()
+                    forEach { res = it.intersect(res) }
+                    return ArrayList(res)
+                }
+            }
+
         }
         return ArrayList()
     }
