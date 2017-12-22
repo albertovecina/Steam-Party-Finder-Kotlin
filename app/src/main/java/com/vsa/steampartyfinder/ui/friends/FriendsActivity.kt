@@ -34,6 +34,9 @@ class FriendsActivity : BaseActivity(), FriendsView {
 
     }
 
+    private var fabInAnimator: Animator? = null
+    private var fabOutAnimator: Animator? = null
+
     private val mPresenter: FriendsPresenter = FriendsPresenterImpl(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,19 +65,39 @@ class FriendsActivity : BaseActivity(), FriendsView {
     }
 
     override fun showFindButton() {
+        if (fabOutAnimator?.isRunning == true)
+            fabOutAnimator?.removeAllListeners()
+
         if (fabFindGames.visibility != View.VISIBLE) {
             val radius = fabFindGames.width / 2
-            val anim = ViewAnimationUtils.createCircularReveal(fabFindGames, radius, radius, 0f, radius.toFloat())
-            fabFindGames.visibility = View.VISIBLE
-            anim.start()
+            fabInAnimator = ViewAnimationUtils.createCircularReveal(fabFindGames, radius, radius, 0f, radius.toFloat())
+            fabInAnimator?.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(p0: Animator?) {
+                }
+
+                override fun onAnimationEnd(p0: Animator?) {
+                }
+
+                override fun onAnimationCancel(p0: Animator?) {
+                }
+
+                override fun onAnimationStart(p0: Animator?) {
+                    fabFindGames.visibility = View.VISIBLE
+                }
+
+            })
+            fabInAnimator?.start()
         }
     }
 
     override fun hideFindButton() {
+        if (fabInAnimator?.isRunning == true)
+            fabInAnimator?.removeAllListeners()
+
         if (fabFindGames.visibility != View.INVISIBLE) {
             val radius = fabFindGames.width / 2
-            val anim = ViewAnimationUtils.createCircularReveal(fabFindGames, radius, radius, radius.toFloat(), 0f)
-            anim.addListener(object : Animator.AnimatorListener {
+            fabOutAnimator = ViewAnimationUtils.createCircularReveal(fabFindGames, radius, radius, radius.toFloat(), 0f)
+            fabOutAnimator?.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationRepeat(p0: Animator?) {
                 }
 
@@ -89,7 +112,7 @@ class FriendsActivity : BaseActivity(), FriendsView {
                 }
 
             })
-            anim.start()
+            fabOutAnimator?.start()
         }
     }
 
