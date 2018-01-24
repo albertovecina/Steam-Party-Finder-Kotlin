@@ -40,14 +40,14 @@ class GamesFilterDialogFragment : DialogFragment(), GamesFilterView {
 
     private val mPresenter: GamesFilterPresenter = GamesFilterPresenterImpl(this)
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.dialog_fragment_games_filter, container)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        mPresenter.onViewCreated(arguments.getSerializable(ARG_GAME_MODES))
+        mPresenter.onViewCreated(arguments?.getSerializable(ARG_GAME_MODES))
     }
 
     private fun initViews() {

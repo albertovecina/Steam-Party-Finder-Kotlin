@@ -1,6 +1,7 @@
 package com.vsa.steampartyfinder.ui.base
 
 import android.app.ProgressDialog
+import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -11,17 +12,22 @@ import com.vsa.steampartyfinder.R
  */
 open class BaseActivity : AppCompatActivity(), BaseView {
 
-    var progressDialog: ProgressDialog? = null
+    private lateinit var progressDialog: ProgressDialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        progressDialog = ProgressDialog(this, R.style.CustomAlertDialogStyle)
+        progressDialog.setCancelable(false)
+        progressDialog.setMessage("Cargando...")
+    }
 
     override fun showProgress() {
-        if (progressDialog == null)
-            progressDialog = ProgressDialog.show(this, null, "Cargando...")
-        else
-            progressDialog?.show()
+        if (!progressDialog.isShowing)
+            progressDialog.show()
     }
 
     override fun hideProgress() {
-        progressDialog?.dismiss()
+        progressDialog.dismiss()
     }
 
     override fun showInfoMessage(message: String) {

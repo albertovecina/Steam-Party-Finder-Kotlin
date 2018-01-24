@@ -7,7 +7,7 @@ import java.io.Serializable
  */
 interface GamesFilterPresenter {
 
-    fun onViewCreated(gameModes: Serializable)
+    fun onViewCreated(gameModes: Serializable?)
 
     fun onAcceptButtonClick()
 

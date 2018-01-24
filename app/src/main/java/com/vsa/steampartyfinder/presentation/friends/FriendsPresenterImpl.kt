@@ -47,7 +47,8 @@ class FriendsPresenterImpl(view: FriendsView) : FriendsPresenter, PlayersDataPro
                     }
 
                     override fun onError(e: Throwable) {
-
+                        mView.hideProgress()
+                        mView.showErrorMessage(e.message.toString());
                     }
 
                 })

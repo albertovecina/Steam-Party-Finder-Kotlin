@@ -7,13 +7,13 @@
     android:layout_height="wrap_content"
     android:padding="20dp">
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/imageViewPlayerPortrait"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_launcher_background" />
+        android:background="@drawable/shape_image_border"
+        android:src="@drawable/avatar_placeholder"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textViewPlayerName"
