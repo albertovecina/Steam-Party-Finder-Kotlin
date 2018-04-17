@@ -42,8 +42,9 @@ class PlayersAdapter(dataProvider: PlayersDataProvider) : RecyclerView.Adapter<P
             }
 
             textViewPlayerName.text = dataProvider.getFriendName(position)
-            Picasso.with(containerView.context).
-                    load(dataProvider.getFriendPortraitUrl(position))
+            Picasso.with(containerView.context)
+                    .load(dataProvider.getFriendPortraitUrl(position))
+                    .placeholder(R.drawable.avatar_placeholder)
                     .into(imageViewPlayerPortrait)
         }
 

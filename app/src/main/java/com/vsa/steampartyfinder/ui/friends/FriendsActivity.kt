@@ -65,8 +65,7 @@ class FriendsActivity : BaseActivity(), FriendsView {
     }
 
     override fun showFindButton() {
-        if (fabOutAnimator?.isRunning == true)
-            fabOutAnimator?.removeAllListeners()
+        fabOutAnimator?.run { if (isRunning) removeAllListeners() }
 
         if (fabFindGames.visibility != View.VISIBLE) {
             val radius = fabFindGames.width / 2
@@ -91,8 +90,7 @@ class FriendsActivity : BaseActivity(), FriendsView {
     }
 
     override fun hideFindButton() {
-        if (fabInAnimator?.isRunning == true)
-            fabInAnimator?.removeAllListeners()
+        fabInAnimator?.run { if (isRunning) removeAllListeners() }
 
         if (fabFindGames.visibility != View.INVISIBLE) {
             val radius = fabFindGames.width / 2

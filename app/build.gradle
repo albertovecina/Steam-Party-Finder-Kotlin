@@ -5,11 +5,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 project.ext {
-    supportVersionName = "26.1.0"
+    supportVersionName = "27.0.2"
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.vsa.steampartyfinder"
         minSdkVersion 23

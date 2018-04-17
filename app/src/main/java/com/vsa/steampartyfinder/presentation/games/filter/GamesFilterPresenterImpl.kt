@@ -11,16 +11,16 @@ class GamesFilterPresenterImpl(view: GamesFilterView) : GamesFilterPresenter {
 
     private val mView: GamesFilterView = view
 
-    override fun onViewCreated(gameModes: Serializable) {
-        if (gameModes is List<*>)
-            gameModes.filterIsInstance(GameDetails.GameMode::class.java).forEach {
-                when (it) {
-                    GameDetails.GameMode.SINGLE -> mView.setSinglePlayerChecked()
-                    GameDetails.GameMode.MULTIPLAYER -> mView.setMultiplayerChecked()
-                    GameDetails.GameMode.COOP -> mView.setCoopChecked()
+    override fun onViewCreated(gameModes: Serializable?) {
+        if (gameModes != null)
+            if (gameModes is List<*>)
+                gameModes.filterIsInstance(GameDetails.GameMode::class.java).forEach {
+                    when (it) {
+                        GameDetails.GameMode.SINGLE -> mView.setSinglePlayerChecked()
+                        GameDetails.GameMode.MULTIPLAYER -> mView.setMultiplayerChecked()
+                        GameDetails.GameMode.COOP -> mView.setCoopChecked()
+                    }
                 }
-            }
-
     }
 
     override fun onAcceptButtonClick() {
