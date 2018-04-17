@@ -17,23 +17,23 @@ class GamesAdapter(gamesDataProvider: GamesDataProvider) : RecyclerView.Adapter<
 
     private val mGamesDataProvider: GamesDataProvider = gamesDataProvider
 
-    override fun onBindViewHolder(holder: GameViewHolder?, position: Int) {
-        holder?.bind(mGamesDataProvider, position)
+    override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
+        holder.bind(mGamesDataProvider, position)
     }
 
     override fun getItemCount(): Int {
         return mGamesDataProvider.getGamesListSize()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): GameViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.row_game, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_game, parent, false)
         return GameViewHolder(view)
     }
 
 
     class GameViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(gamesDataProvider: GamesDataProvider, position: Int) {
-            Picasso.with(containerView.context)
+            Picasso.get()
                     .load(gamesDataProvider.getImageUrl(position))
                     .into(imageViewGame)
             textViewGame.text = gamesDataProvider.getName(position)

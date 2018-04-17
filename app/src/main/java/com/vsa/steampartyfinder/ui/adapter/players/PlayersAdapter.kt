@@ -21,14 +21,14 @@ class PlayersAdapter(dataProvider: PlayersDataProvider) : RecyclerView.Adapter<P
         return mDataProvider.friendsListSize()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PlayerViewHolder {
-        val view = LayoutInflater.from(parent?.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
+        val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.row_player, parent, false)
         return PlayerViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: PlayerViewHolder?, position: Int) {
-        holder?.bind(mDataProvider, position)
+    override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
+        holder.bind(mDataProvider, position)
     }
 
     class PlayerViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -42,7 +42,7 @@ class PlayersAdapter(dataProvider: PlayersDataProvider) : RecyclerView.Adapter<P
             }
 
             textViewPlayerName.text = dataProvider.getFriendName(position)
-            Picasso.with(containerView.context)
+            Picasso.get()
                     .load(dataProvider.getFriendPortraitUrl(position))
                     .placeholder(R.drawable.avatar_placeholder)
                     .into(imageViewPlayerPortrait)
