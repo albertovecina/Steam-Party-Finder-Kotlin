@@ -23,4 +23,24 @@ object GameDetailsDataMapper {
         return gameDetails
     }
 
+    fun transform(responseAppDetails: com.vsa.steampartyfinder.data.model.response.bigpicture.ResponseAppDetails): GameDetails {
+        val gameDetails = GameDetails()
+        responseAppDetails.entries.forEach {
+            gameDetails.appId = it.key
+            var gameModes: MutableList<GameDetails.GameMode>? =
+                    it.value.data?.categories?.mapNotNull {
+                        when (it.id) {
+                            2 -> GameDetails.GameMode.SINGLE
+                            1 -> GameDetails.GameMode.MULTIPLAYER
+                            9 -> GameDetails.GameMode.COOP
+                            else -> null
+                        }
+                    }?.toMutableList()
+            if (gameModes == null)
+                gameModes = ArrayList()
+            gameDetails.gameModes = gameModes
+        }
+        return gameDetails
+    }
+
 }
