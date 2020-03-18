@@ -3,8 +3,8 @@ package com.vsa.steampartyfinder.ui.games
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vsa.steampartyfinder.R
 import com.vsa.steampartyfinder.presentation.games.GamesPresenter
 import com.vsa.steampartyfinder.presentation.games.GamesPresenterImpl
@@ -81,15 +81,15 @@ class GamesActivity : BaseActivity(), GamesView {
     }
 
     override fun refreshList() {
-        recyclerViewGames.adapter.notifyDataSetChanged()
+        recyclerViewGames.adapter?.notifyDataSetChanged()
     }
 
     override fun refreshList(position: Int) {
-        recyclerViewGames.adapter.notifyItemChanged(position)
+        recyclerViewGames.adapter?.notifyItemChanged(position)
     }
 
     override fun removeItemAt(position: Int) {
-        recyclerViewGames.adapter.notifyItemRemoved(position)
+        recyclerViewGames.adapter?.notifyItemRemoved(position)
     }
 
 }
