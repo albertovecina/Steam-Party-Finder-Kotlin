@@ -3,23 +3,24 @@ package com.vsa.steampartyfinder.data.source.usecase
 import com.vsa.steampartyfinder.data.model.domain.Player
 import com.vsa.steampartyfinder.data.source.repository.SteamRepository
 import io.reactivex.Observable
+import javax.inject.Inject
 
 /**
  * Created by Alberto Vecina Sánchez on 4/12/17.
  */
-object GetFriendsUseCase {
+class GetFriendsUseCase @Inject constructor(private val steamRepository: SteamRepository) {
 
     fun observeSteamId(nickName: String): Observable<String> {
-        return SteamRepository.getSteamId(nickName)
+        return steamRepository.getSteamId(nickName)
     }
 
     private fun observeFriendsSteamIds(steamId: String): Observable<List<String>> {
-        return SteamRepository.getFriendsSteamIds(steamId)
+        return steamRepository.getFriendsSteamIds(steamId)
     }
 
     private fun observePlayerSummaries(playerIds: List<String>): Observable<List<Player>> {
         val steamIds = playerIds.toString().replace("]", "")
-        return SteamRepository.getPlayers(steamIds)
+        return steamRepository.getPlayers(steamIds)
                 .map { players -> players.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it.name })) }
     }
 

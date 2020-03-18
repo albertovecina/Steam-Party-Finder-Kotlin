@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.vsa.steampartyfinder.ui.games.GamesActivity">
+    tools:context=".feature.games.view.GamesActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewGames"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.vsa.steampartyfinder.ui.custom.FabActionMenu
+    <com.vsa.steampartyfinder.common.view.custom.FabActionMenu
         android:id="@+id/fabActionMenuFilters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

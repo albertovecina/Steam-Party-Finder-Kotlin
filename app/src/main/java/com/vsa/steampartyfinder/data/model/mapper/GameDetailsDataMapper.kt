@@ -28,8 +28,8 @@ object GameDetailsDataMapper {
         responseAppDetails.entries.forEach {
             gameDetails.appId = it.key
             var gameModes: MutableList<GameDetails.GameMode>? =
-                    it.value.data?.categories?.mapNotNull {
-                        when (it.id) {
+                    it.value.data?.categories?.mapNotNull { category ->
+                        when (category.id) {
                             2 -> GameDetails.GameMode.SINGLE
                             1 -> GameDetails.GameMode.MULTIPLAYER
                             9 -> GameDetails.GameMode.COOP
