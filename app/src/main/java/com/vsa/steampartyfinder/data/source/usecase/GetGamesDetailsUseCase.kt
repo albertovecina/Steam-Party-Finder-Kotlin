@@ -6,14 +6,15 @@ import com.vsa.steampartyfinder.data.source.repository.SteamSpyRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * Created by Alberto Vecina Sánchez on 14/12/17.
  */
-object GetGamesDetailsUseCase {
+class GetGamesDetailsUseCase @Inject constructor(private val steamSpyRepository: SteamSpyRepository) {
 
     private fun observeGameDetails(appId: String): Observable<GameDetails> {
-        return SteamSpyRepository.observeGameDetails(appId)
+        return steamSpyRepository.observeGameDetails(appId)
     }
 
     fun observeGameModes(games: List<Game>): Observable<GameDetails> {

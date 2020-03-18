@@ -3,19 +3,20 @@ package com.vsa.steampartyfinder.data.source.usecase
 import com.vsa.steampartyfinder.data.model.domain.Game
 import com.vsa.steampartyfinder.data.source.repository.SteamRepository
 import io.reactivex.Observable
+import javax.inject.Inject
 
 /**
  * Created by Alberto Vecina Sánchez on 11/12/17.
  */
-class GetGamesUseCase {
+class GetGamesUseCase @Inject constructor(private val steamRepository: SteamRepository) {
 
     private fun observeOwnedGames(steamId: String): Observable<List<Game>> {
-        return SteamRepository.getOwnedGames(steamId)
+        return steamRepository.getOwnedGames(steamId)
     }
 
     fun observeOwnedGames(steamIds: List<String>): Observable<List<Game>> {
         val observables: List<Observable<List<Game>>> = steamIds.map { steamId -> observeOwnedGames(steamId) }
-        return Observable.zip(observables, { res -> intersect(res).sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it.name })) })
+        return Observable.zip(observables) { res -> intersect(res).sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.name }) }
     }
 
     private fun intersect(response: Array<Any>): List<Game> {

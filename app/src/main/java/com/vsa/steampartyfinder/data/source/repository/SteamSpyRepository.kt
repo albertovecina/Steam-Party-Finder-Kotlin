@@ -2,16 +2,19 @@ package com.vsa.steampartyfinder.data.source.repository
 
 import com.vsa.steampartyfinder.data.model.domain.GameDetails
 import com.vsa.steampartyfinder.data.model.mapper.GameDetailsDataMapper
-import com.vsa.steampartyfinder.data.source.ws.SteamBigPictureClient
+import com.vsa.steampartyfinder.data.source.ws.SteamBigPictureApiInterface
+import com.vsa.steampartyfinder.common.di.scope.PerApplication
 import io.reactivex.Observable
+import javax.inject.Inject
 
 /**
  * Created by Alberto Vecina Sánchez on 14/12/17.
  */
-object SteamSpyRepository {
+@PerApplication
+class SteamSpyRepository @Inject constructor(private val steamBigPictureApiInterface: SteamBigPictureApiInterface) {
 
     fun observeGameDetails(appId: String): Observable<GameDetails> {
-        return SteamBigPictureClient.create().observeGameDetails(appId)
+        return steamBigPictureApiInterface.observeGameDetails(appId)
                 .map { appDetails -> GameDetailsDataMapper.transform(appDetails) }
     }
 
