@@ -18,7 +18,7 @@ class FriendsPresenterImpl(view: FriendsView) : FriendsPresenter, PlayersDataPro
     private var mFriendsList: List<Player>? = null
     private val mSelectedFriendsList: MutableList<String> = ArrayList()
 
-    override fun onCreate(steamId: String, friendsList: Serializable) {
+    override fun onCreate(steamId: String, friendsList: Serializable?) {
         mSelectedFriendsList.add(steamId)
         mFriendsList = friendsList as? ArrayList<Player>
         mView.setFriendsList(this)

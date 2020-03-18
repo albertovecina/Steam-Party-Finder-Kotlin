@@ -2,8 +2,8 @@ package com.vsa.steampartyfinder.ui.custom
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.ViewAnimationUtils
 import com.vsa.steampartyfinder.R
@@ -12,24 +12,10 @@ import com.vsa.steampartyfinder.R
 /**
  * Created by Alberto Vecina Sánchez on 16/12/17.
  */
-class FabCheckBox : FloatingActionButton {
-    constructor(context: Context?) : super(context) {
-        initViews()
-    }
-
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        initViews()
-    }
-
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initViews()
-    }
-
-    var isChecked: Boolean = false
-    private var mOriginalTintStateList: ColorStateList? = backgroundTintList
-
-
-    private fun initViews() {
+class FabCheckBox @JvmOverloads constructor(
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : FloatingActionButton(context, attrs, defStyleAttr) {
+    init {
         super.setOnClickListener {
             val radius: Float = width / 2.toFloat()
             if (!isChecked) {
@@ -45,9 +31,13 @@ class FabCheckBox : FloatingActionButton {
             }
 
         }
-
     }
 
+
+    var isChecked: Boolean = false
+    private var mOriginalTintStateList: ColorStateList? = backgroundTintList
+
     override fun setOnClickListener(l: OnClickListener?) {
+        
     }
 }

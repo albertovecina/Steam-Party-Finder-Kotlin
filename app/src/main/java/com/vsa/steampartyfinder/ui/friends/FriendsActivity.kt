@@ -4,7 +4,7 @@ import android.animation.Animator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -37,16 +37,18 @@ class FriendsActivity : BaseActivity(), FriendsView {
     private var fabInAnimator: Animator? = null
     private var fabOutAnimator: Animator? = null
 
-    private val mPresenter: FriendsPresenter = FriendsPresenterImpl(this)
+    private val presenter: FriendsPresenter = FriendsPresenterImpl(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friends)
         initViews()
-        if (intent.extras != null)
-            mPresenter.onCreate(
-                    intent.extras.getString(EXTRA_STEAM_ID),
-                    intent.extras.getSerializable(EXTRA_FRIENDS_LIST))
+            intent.extras?.let {
+                presenter.onCreate(
+                        it.getString(EXTRA_STEAM_ID, ""),
+                        it.getSerializable(EXTRA_FRIENDS_LIST))
+            }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -61,7 +63,7 @@ class FriendsActivity : BaseActivity(), FriendsView {
         recyclerViewFriends.layoutManager = LinearLayoutManager(this)
         recyclerViewFriends.addItemDecoration(HorizontalDividerItemDecoration.Builder(this)
                 .build())
-        fabFindGames.setOnClickListener { mPresenter.onFindButtonClick() }
+        fabFindGames.setOnClickListener { presenter.onFindButtonClick() }
     }
 
     override fun showFindButton() {
